@@ -19,7 +19,7 @@ async def magisk_(message: Message):
         data = get(release_url).json()
 
         releases += (
-            f'{name}: [APK v{data["magisk"]["version"]}]({data["magisk"]["link"]}) \n'
+            f'{name}: [APK v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | [Changelog]({data["magisk"]["note"]})\n'
         )
 
     await message.edit(releases, disable_web_page_preview=True)
