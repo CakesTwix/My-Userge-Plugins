@@ -32,12 +32,15 @@ async def loli_(message: Message):
 async def loli_(message: Message):
     """ Anime Arts """
     await message.delete()
+    url = "https://danbooru.donmai.us/posts.json?limit=1&tags=order:random rating:s"
+    if '-nsfw' in message.flags:
+        url = "https://danbooru.donmai.us/posts.json?limit=1&tags=order:random rating:e"
     async with aiohttp.ClientSession() as session:
-            async with session.get("https://danbooru.donmai.us/posts.json?limit=1&tags=order:random rating:s") as get:
+            async with session.get(url) as get:
                 answer = await get.json()
                 await session.close()
     tag = ''
-    for tags in answer[0]["tag_string"].split():
+    for tags in answer[0]["tag_string_general"].split():
                 tag += '#' + tags + ' '
     await message.client.send_photo(chat_id=message.chat.id,
                                     photo=answer[0]["large_file_url"].replace (" ","%20"),
