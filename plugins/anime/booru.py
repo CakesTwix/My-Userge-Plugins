@@ -12,8 +12,9 @@ import aiohttp
 async def loli_(message: Message):
     """ Loli! """
     await message.delete()
+    url = "https://lolibooru.moe/post/index.json?limit=1&tags=order:random  rating:s"
     async with aiohttp.ClientSession() as session:
-            async with session.get("https://lolibooru.moe/post/index.json?limit=1&tags=order:random  rating:s") as get:
+            async with session.get(url) as get:
                 answer = await get.json()
                 await session.close()
     tag = ''
@@ -28,8 +29,11 @@ async def loli_(message: Message):
 @userge.on_cmd("danbooru", about={
     'header': "Anime Arts! From danbooru.donmai.us",
     'description': 'Sending art from danbooru',
-    'usage': "{tr}danbooru"})
-async def loli_(message: Message):
+    'usage': "{tr}danbooru",
+    'options': {'-nsfw': '18+ Art~~'},
+    'examples': ['{tr}danbooru -nsfw']}
+    )
+async def danbooru_(message: Message):
     """ Anime Arts """
     await message.delete()
     url = "https://danbooru.donmai.us/posts.json?limit=1&tags=order:random rating:s"
