@@ -43,9 +43,25 @@ async def danbooru_(message: Message):
             async with session.get(url) as get:
                 answer = await get.json()
                 await session.close()
-    tag = ''
-    for tags in answer[0]["tag_string_general"].split():
+
+    if answer[0]['tag_string_character'] != "":
+        tag = '**Character:** '
+        for tags in answer[0]["tag_string_character"].split():
                 tag += '#' + tags + ' '
+    if answer[0]['tag_string_copyright'] != "":          
+        tag += '\n**Copyright:** '
+        for tags in answer[0]["tag_string_copyright"].split():
+                tag += '#' + tags + ' '
+    
+    if answer[0]['tag_string_artist'] != "":
+        tag += '\n**Artist:** '
+        for tags in answer[0]["tag_string_artist"].split():
+            tag += '#' + tags + ' '
+    
+    if answer[0]['source'] != "":
+        tag += f'\n**Source:** [Link]({answer[0]["source"]})'
+
+
     await message.client.send_photo(chat_id=message.chat.id,
                                     photo=answer[0]["large_file_url"].replace (" ","%20"),
                                     caption=tag,
