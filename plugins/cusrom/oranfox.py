@@ -15,6 +15,7 @@ from datetime import datetime
     },
 )
 async def ofox_(message: Message):
+    await message.delete()
     if not message.input_str:
         await message.err("Provide a device codename to search recovery", del_in=2)
         return
